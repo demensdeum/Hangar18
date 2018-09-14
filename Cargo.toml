@@ -1,0 +1,8 @@
+[package]
+name = "hangar18"
+version = "0.1.0"
+authors = ["Demensdeum <demensdeum@gmail.com>"]
+
+[dependencies]
+regex = "1"
+walkdir = "2"
