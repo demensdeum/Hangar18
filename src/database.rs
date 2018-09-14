@@ -24,20 +24,20 @@ impl Database {
         //println!("database_results: {:?}", self.database_results);
     }
 
-    pub fn removeAll(&mut self) {
+    pub fn remove_all(&mut self) {
         self.database_results.clear();
     }
 
-    pub fn grepOutputFor(&self, searchDefinition: &String) -> Option<String> {
+    pub fn grep_output_for(&self, search_definition: &String) -> Option<String> {
 
-        let result = self.database_results.get(searchDefinition);
+        let result = self.database_results.get(search_definition);
         if result.is_none() {
             return None;
         }
-        let actualResult = result.unwrap();
+        let actual_result = result.unwrap();
 
-        let file_path = actualResult.file_path.clone();
-        let line_index = actualResult.line_index.clone();
+        let file_path = actual_result.file_path.clone();
+        let line_index = actual_result.line_index.clone();
 
         Some(format!("{0}:{1}", file_path, line_index))
     }

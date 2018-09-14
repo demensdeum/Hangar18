@@ -12,15 +12,16 @@ fn main() {
         exit(1);
     }
 
-    let parseResults = directoryparser::DirectoryParser::parse(&args[1]);
+    let parse_results = directoryparser::DirectoryParser::parse(&args[1]);
     let mut database = database::Database::new();
-    database.add(parseResults);
-    let grepOutput = database.grepOutputFor(&args[2]);
-    if grepOutput.is_none() {
+    database.add(parse_results);
+    let grep_output = database.grep_output_for(&args[2]);
+    if grep_output.is_none() {
         println!("No match");
         exit(2);
     }
-    println!("{}", grepOutput.unwrap());
+    println!("{}", grep_output.unwrap());
+    database.remove_all();
 
     exit(0);
 }

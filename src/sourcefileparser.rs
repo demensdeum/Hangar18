@@ -85,13 +85,13 @@ impl SourceFileParser {
         let line_string = &line.to_string();
         let captures = class_declaration_parser_regex.captures(line_string);
         if captures.is_none() { return None; }
-        let capturesResult = captures.unwrap();
-        if capturesResult.len() < 2 { return None; }
-        //println!("Captured method definition: {:?} line: {} line: {}", capturesResult, line_index, line);
+        let captures_result = captures.unwrap();
+        if captures_result.len() < 2 { return None; }
+        //println!("Captured method definition: {:?} line: {} line: {}", captures_result, line_index, line);
 
         let result = SourceFileParserResult {
             result_type: String::from("Method declaration"),
-            value: capturesResult[1].to_string(),
+            value: captures_result[1].to_string(),
             file_path: file_path.clone(),
             line_index: line_index};
 

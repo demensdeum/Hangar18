@@ -16,8 +16,8 @@ impl DirectoryParser {
         let files = DirectoryParser::collect_files(directory_path);
         for file in files {
             let parsed = SourceFileParser::parse(&file);
-            for parsedResult in parsed {
-                results.push(parsedResult)
+            for parsed_result in parsed {
+                results.push(parsed_result)
             }
         }
 
