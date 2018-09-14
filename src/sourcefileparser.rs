@@ -64,11 +64,13 @@ impl SourceFileParser {
         let line_string = &line.to_string();
         let captures = class_declaration_parser_regex.captures(line_string);
         if captures.is_none() { return None; }
+        let captures_result = captures.unwrap();
+        if captures_result.len() < 2 { return None; }
         //println!("Captured class definition: {:?} line: {} line: {}", captures, line_index, line);
 
         let result = SourceFileParserResult {
             result_type: String::from("Class declaration"),
-            value: String::from("value"),
+            value: captures_result[1].to_string(),
             file_path: file_path.clone(),
             line_index: line_index};
 
