@@ -6,10 +6,10 @@ use self::regex::Regex;
 
 #[derive(Debug)]
 pub struct SourceFileParserResult {
-    result_type: String,
-    value: String,
-    file_path: String,
-    line_index: usize
+    pub result_type: String,
+    pub value: String,
+    pub file_path: String,
+    pub line_index: usize
 }
 
 pub struct SourceFileParser {
@@ -33,7 +33,7 @@ impl SourceFileParser {
         for (line_index, line) in lines.enumerate() {
             let class_parse_result = SourceFileParser::parse_class_declaration(String::from(line),
                                                                               file_path,
-                                                                              line_index);
+                                                                              line_index + 1);
             if !class_parse_result.is_none() {
                 results.push(class_parse_result.unwrap());
             }
@@ -41,7 +41,7 @@ impl SourceFileParser {
 
                 let method_parse_result = SourceFileParser::parse_method_declaration(String::from(line),
                                                                                      file_path,
-                                                                                     line_index);
+                                                                                     line_index + 1);
                 if !method_parse_result.is_none() {
                     results.push(method_parse_result.unwrap());
                 }
@@ -64,7 +64,7 @@ impl SourceFileParser {
         let line_string = &line.to_string();
         let captures = class_declaration_parser_regex.captures(line_string);
         if captures.is_none() { return None; }
-        println!("Captured class definition: {:?} line: {} line: {}", captures, line_index, line);
+        //println!("Captured class definition: {:?} line: {} line: {}", captures, line_index, line);
 
         let result = SourceFileParserResult {
             result_type: String::from("Class declaration"),
@@ -85,11 +85,13 @@ impl SourceFileParser {
         let line_string = &line.to_string();
         let captures = class_declaration_parser_regex.captures(line_string);
         if captures.is_none() { return None; }
-        println!("Captured method definition: {:?} line: {} line: {}", captures, line_index, line);
+        let capturesResult = captures.unwrap();
+        if capturesResult.len() < 2 { return None; }
+        //println!("Captured method definition: {:?} line: {} line: {}", capturesResult, line_index, line);
 
         let result = SourceFileParserResult {
             result_type: String::from("Method declaration"),
-            value: String::from("value"),
+            value: capturesResult[1].to_string(),
             file_path: file_path.clone(),
             line_index: line_index};
 
